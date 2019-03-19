@@ -5,6 +5,7 @@ class RaiderIoCli::Scraper
   # raider.io/character/#{region}/#{server}/#{name}
   
   def self.scrape(name, server, region)
+    puts "hello"
     url = "#{BASE_URL}/#{region}/#{server}/#{name}"
     @@browser.goto url
     self.scrape_player(url)
@@ -18,5 +19,3 @@ class RaiderIoCli::Scraper
     @@browser.close
   end
 end
-
-Raider_Io_Cli::Scraper.scrape("Sikz", "Stormrage", "us")
