@@ -1,5 +1,6 @@
 require 'watir'
 require 'pry'
+require 'webdrivers'
 
 require_relative "raider_io_cli/version"
 require_relative "raider_io_cli/cli"

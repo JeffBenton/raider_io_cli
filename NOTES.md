@@ -48,12 +48,12 @@ Scraper
 
 Character
   - Takes in Name, Server, & Region
-  - Generates raider.io URL and sends to Scraper, recieves character info back
+  - Generates raider.io URL and sends to Scraper, receives character info back
 
 Dungeon
   - Takes in info from Scraper and formats it
-
+[]
 CLI
-  - Faciliates the CLI workflow
+  - Facilitates the CLI workflow
 
 
