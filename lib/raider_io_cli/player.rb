@@ -9,5 +9,4 @@ class RaiderIoCli::Player
     @recent_runs = []
     @best_runs = []
   end
-
 end

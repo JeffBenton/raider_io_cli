@@ -49,4 +49,8 @@ class RaiderIoCli::Dungeon
   def add_affixes(affixes)
     affixes.each { |affix| @affixes << DUNGEON_AFFIXES[affix.to_i] }
   end
+
+  def self.list_dungeons
+    DUNGEON_NAME_PAIRS.each_pair { |abrev, dungeon| puts "#{dungeon} (#{abrev.to_s})" }
+  end
 end

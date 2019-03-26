@@ -12,9 +12,15 @@ class RaiderIoCli::Scraper
     self.scrape_player(player)
     self.scrape_recent_runs(player)
     self.scrape_best_runs(player)
-    binding.pry
+    player
   end
-  
+
+  def self.validate_player(name, server, region)
+    url = "#{BASE_URL}/#{region}/#{server}/#{name}"
+    @@browser.goto url
+    !@@browser.div(class: "slds-modal__header").h2.exists?
+  end
+
   def self.scrape_player(player)
     player.guild = @@browser.div(class: "slds-text-body--regular").text
     player.info = @@browser.h3(class: ["slds-text-body--regular", "class-color--1", "rio-text-shadow--normal"]).text
