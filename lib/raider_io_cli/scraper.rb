@@ -23,10 +23,12 @@ class RaiderIoCli::Scraper
 
   def self.scrape_player(player)
     player.guild = @@browser.div(class: "slds-text-body--regular").text
-    player.info = @@browser.h3(class: ["slds-text-body--regular", "class-color--1", "rio-text-shadow--normal"]).text
+    player.info = @@browser.h3(class: ["slds-text-body--regular", "rio-text-shadow--normal"]).text
     player.ilvl = @@browser.spans(class: ["rio-badge", "rio-badge-size--small"]).first.text.delete " Item Level"
+    player.score = @@browser.divs(class: "rio-guild-rankings-table").last.span(class: "text-muted").text
     player.hoa = @@browser.spans(class: ["rio-badge", "rio-badge-size--small"]).last.text.delete " Heart of Azeroth Level"
-    player.prog = @@browser.divs(class: "slds-p-horizontal--x-small").last.text.split("\n").first
+    player.prog = @@browser.divs(class: "slds-p-horizontal--x-small")[1].text.split("\n").first
+    player.format_score(player.score)
   end
 
   def self.scrape_recent_runs(player)
@@ -44,13 +46,13 @@ class RaiderIoCli::Scraper
 
   def self.scrape_best_runs(player)
     @@browser.tbodys(class: "rio-striped").each do |dungeon|
-      name = dungeon.td(data_label: "Dungeon Name").text.strip,
-      level = dungeon.td(data_label: "Mythic Level").text,
-      clear_time = dungeon.td(data_label: "Clear Time").text,
-      score = dungeon.td(data_label: "Score").text,
-      world_rank = dungeon.td(data_label: "World Rank").text,
-      region_rank = dungeon.td(data_label: "Region Rank").text,
-      affixes = dungeon.td(data_label: "Weekly Affixes").as.collect { |affix| affix.rel.delete "affix=" },
+      name = dungeon.td(data_label: "Dungeon Name").text.strip
+      level = dungeon.td(data_label: "Mythic Level").text
+      clear_time = dungeon.td(data_label: "Clear Time").text
+      score = dungeon.td(data_label: "Score").text
+      world_rank = dungeon.td(data_label: "World Rank").text
+      region_rank = dungeon.td(data_label: "Region Rank").text
+      affixes = dungeon.td(data_label: "Weekly Affixes").as.collect { |affix| affix.rel.delete "affix=" }
       stars = dungeon.is(class: "fa-star").length
 
       run = RaiderIoCli::Dungeon.new(name: name, nick_name: nil, date: nil, level: level, stars: stars)
@@ -59,8 +61,7 @@ class RaiderIoCli::Scraper
       run.world_rank = world_rank
       run.region_rank = region_rank
       run.add_affixes(affixes)
-
-      player.best_runs << run
+      player.add_best_run(run)
     end
   end
 

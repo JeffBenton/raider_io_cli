@@ -3,7 +3,7 @@ class RaiderIoCli::Dungeon
   attr_reader :date, :level, :stars, :affixes
 
   DUNGEON_NAME_PAIRS = {
-      :AD => "Atal'Dazar",
+      :AD => "Atal'dazar",
       :FH => "Freehold",
       :TD => "Tol Dagor",
       :UNDR => "The Underrot",
@@ -42,7 +42,7 @@ class RaiderIoCli::Dungeon
     end
     @date = date
     @level = level
-    @stars = stars
+    @stars = "*" * stars
     @affixes = []
   end
 
@@ -51,6 +51,24 @@ class RaiderIoCli::Dungeon
   end
 
   def self.list_dungeons
-    DUNGEON_NAME_PAIRS.each_pair { |abrev, dungeon| puts "#{dungeon} (#{abrev.to_s})" }
+    count = 1
+    DUNGEON_NAME_PAIRS.each_pair do |abrev, dungeon|
+      puts "#{count}. #{dungeon} (#{abrev.to_s})"
+      count+=1
+    end
+  end
+
+  def display_run
+    if @score == ""
+      puts "You have not completed #{@name} on a Mythic+ difficulty this season."
+      return
+    end
+
+    puts "Your best #{@name} is:"
+    puts "#{@level}#{@stars} #{@clear_time}"
+    puts "#{@affixes.join(", ")}"
+    puts "Score: #{@score}"
+    puts "World Rank: #{@world_rank}"
+    puts "Region Rank: #{@region_rank}"
   end
 end
