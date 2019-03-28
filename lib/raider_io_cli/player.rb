@@ -11,6 +11,7 @@ class RaiderIoCli::Player
   end
 
   def show_info
+    puts "\n"
     puts "#{@name} #{@guild}"
     puts "#{@info}"
     puts "#{@ilvl} ilvl #{@hoa} HoA lvl"
@@ -27,6 +28,7 @@ class RaiderIoCli::Player
       puts "No recent runs detected."
       return
     end
+    puts "\n"
     @recent_runs.each do|run|
       puts "#{run.level}#{run.stars} #{run.nick_name} #{run.date}"
     end

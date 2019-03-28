@@ -68,25 +68,25 @@ class RaiderIoCli::Cli
     while @input != "back"
       get_user_input
       case @input.downcase
-      when "1" || "ad" || "atal'dazar"
+      when "1" , "ad" , "atal'dazar"
         @player.show_best_run('AD')
-      when "2" || "fh" || "freehold"
+      when "2" , "fh" , "freehold"
         @player.show_best_run('FH')
-      when "3" || "td" || "tol dagor"
+      when "3" , "td" , "tol dagor"
         @player.show_best_run('TD')
-      when "4" || "undr" || "the underrot"
+      when "4" , "undr" , "the underrot"
         @player.show_best_run('UNDR')
-      when "5" || "tos" || "temple of sethraliss"
+      when "5" , "tos" , "temple of sethraliss"
         @player.show_best_run('TOS')
-      when "6" || "wm" || "waycrest manor"
+      when "6" , "wm" , "waycrest manor"
         @player.show_best_run('WM')
-      when "7" || "kr" || "kings' rest"
+      when "7" , "kr" , "kings' rest"
         @player.show_best_run('KR')
-      when "8" || "siege" || "siege of boralus"
+      when "8" , "siege" , "siege of boralus"
         @player.show_best_run('SIEGE')
-      when "9" || "ml" || "the motherlode!!"
+      when "9" , "ml" , "the motherlode!!"
         @player.show_best_run('ML')
-      when "10" || "sots" || "shrine of the storm"
+      when "10" , "sots" , "shrine of the storm"
         @player.show_best_run('SOTS')
       when "list"
         RaiderIoCli::Dungeon.list_dungeons

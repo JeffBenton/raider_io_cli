@@ -64,6 +64,7 @@ class RaiderIoCli::Dungeon
       return
     end
 
+    puts "\n"
     puts "Your best #{@name} is:"
     puts "#{@level}#{@stars} #{@clear_time}"
     puts "#{@affixes.join(", ")}"
