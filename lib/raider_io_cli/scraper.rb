@@ -22,25 +22,25 @@ class RaiderIoCli::Scraper
   end
 
   def self.scrape_player(player)
+    # binding.pry
     player.guild = @@browser.div(class: "slds-text-body--regular").text
     player.info = @@browser.h3(class: ["slds-text-body--regular", "rio-text-shadow--normal"]).text
     player.ilvl = @@browser.spans(class: ["rio-badge", "rio-badge-size--small"]).first.text.delete " Item Level"
-    player.score = @@browser.divs(class: "rio-guild-rankings-table").last.span(class: "text-muted").text
-    player.hoa = @@browser.spans(class: ["rio-badge", "rio-badge-size--small"]).last.text.delete " Heart of Azeroth Level"
-    player.prog = @@browser.divs(class: "slds-p-horizontal--x-small")[1].text.split("\n").first
-    player.format_score(player.score)
+    player.score = @@browser.divs(class: "rio-guild-rankings-table").last.span(class: "text-muted").exists? ?
+                       @@browser.divs(class: "rio-guild-rankings-table").last.span(class: "text-muted").text : 0
+    player.hoa = @@browser.spans(class: ["rio-badge", "rio-badge-size--small"]).last.exists? ?
+                     @@browser.spans(class: ["rio-badge", "rio-badge-size--small"]).last.text.delete(" Heart of Azeroth Level") : 0
+    player.prog = @@browser.divs(class: "slds-p-horizontal--x-small")[1].exists? ?
+                      @@browser.divs(class: "slds-p-horizontal--x-small")[1].text.split("\n").first : "N/A"
+    player.format_score(player.score) unless player.score == 0
   end
 
   def self.scrape_recent_runs(player)
-    recent_runs = []
     @@browser.sections(class: "rio-sidebar-section")[1].tbody.trs.each do|run|
-      recent_runs << run.text.split("\n")
-      recent_runs.last << run.is(class: "fa-star").length
-    end
-
-    recent_runs.each do |run|
-      info = run.first.split(" ")
-      player.recent_runs << RaiderIoCli::Dungeon.new(name: nil, nick_name: info.last, date: run[1], level: info.first, stars: run.last)
+      info = run.text.split("\n")
+      info[0] = info[0].split(" ")
+      info.flatten!
+      player.recent_runs << RaiderIoCli::Dungeon.new(name: nil, nick_name: info[1], date: info[2], level: info[0], stars: run.is(class: "fa-star").length)
     end
   end
 
