@@ -1,28 +1,22 @@
 # RaiderIoCli
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/raider_io_cli`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This CLI application provides information scraped from the Raider.io site.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+To install this CLI application - 
+- git clone this repo
+- cd raider_io_cli
+- bundle install
 
-```ruby
-gem 'raider_io_cli'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install raider_io_cli
+To start the application
+- bin/raider_io_cli
 
 ## Usage
 
-TODO: Write usage instructions here
+- Follow the prompts to input a character's name, server, and region.
+- Select options from the presented lists to see information related to that given character
+
 
 ## Development
 
