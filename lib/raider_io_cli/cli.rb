@@ -1,31 +1,40 @@
 class RaiderIoCli::Cli
-  
+
+  def initialize
+    @info = []
+  end
+
   def call
     puts "Welcome to the Raider.io CLI"
     puts "Follow the prompts to retrieve your character information."
     get_character_info
-    fetch_character
-    main_menu
+    if @info.length == 3
+      fetch_character
+      main_menu
+    end
     quit
   end
 
   def main_menu
-    while @input != 'exit' && @input != "4"
+    while true
       show_options
       get_user_input
-      case @input
+      case @input.downcase
       when "1"
         @player.show_info
       when "2"
         @player.show_recent_runs
       when "3"
         select_dungeon
+      when "4", "exit"
+        break
+      else
+        puts "Input not recognized, please try again."
       end
     end
   end
 
   def get_character_info
-    @info = []
     puts "Enter the character name"
     @info << get_user_input
     puts "Enter the server"
@@ -35,6 +44,7 @@ class RaiderIoCli::Cli
 
     return @info if validate_character(@info[0], @info[1], @info[2])
 
+    @info.clear
     puts "The character you entered does not exist, press \"enter\" to try a different character, or type \"exit\" to quit."
     get_user_input
     get_character_info if @input == ""
@@ -84,7 +94,7 @@ class RaiderIoCli::Cli
         @player.show_best_run('KR')
       when "8" , "siege" , "siege of boralus"
         @player.show_best_run('SIEGE')
-      when "9" , "ml" , "the motherlode!!"
+      when "9" , "ml" , "the motherlode!!", "the motherlode"
         @player.show_best_run('ML')
       when "10" , "sots" , "shrine of the storm"
         @player.show_best_run('SOTS')
@@ -93,8 +103,7 @@ class RaiderIoCli::Cli
       when "back"
         break
       else
-        puts "Input not recognized, press \"enter\" to try again, or type \"back\" to go back."
-        get_user_input
+        puts "Input not recognized, please try again."
       end
 
       puts "\nEnter another dungeon, type \"list\" to display a list of dungeons, or type \"back\" to go back."
