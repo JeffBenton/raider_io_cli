@@ -10,7 +10,7 @@ To install this CLI application -
 - bundle install
 
 To start the application
-- bin/raider_io_cli
+- bin/raider_io
 
 ## Usage
 
