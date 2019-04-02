@@ -2,8 +2,7 @@ class RaiderIoCli::Scraper
   
   @@browser = Watir::Browser.new(:chrome, headless: true)
   BASE_URL = "https://raider.io/characters"
-  # raider.io/character/#{region}/#{server}/#{name}
-  
+
   def self.scrape(name, server, region)
     url = "#{BASE_URL}/#{region}/#{server}/#{name}"
     @@browser.goto url
@@ -22,7 +21,6 @@ class RaiderIoCli::Scraper
   end
 
   def self.scrape_player(player)
-    # binding.pry
     player.guild = @@browser.div(class: "slds-text-body--regular").text
     player.info = @@browser.h3(class: ["slds-text-body--regular", "rio-text-shadow--normal"]).text
     player.ilvl = @@browser.spans(class: ["rio-badge", "rio-badge-size--small"]).first.text.delete " Item Level"
